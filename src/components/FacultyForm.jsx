@@ -5,14 +5,13 @@ import { ChevronDown } from "lucide-react";
 export default function FacultyForm({ initial, onSave, onCancel }) {
   
   const SUBJECT_OPTIONS = [
-    "Maths", "Chemistry", "Biolagy", "Physics", "Social Science",
+    "Maths", "Chemistry", "Biology", "Physics", "Social Science",
     "Malayalam", "English", "Arabic", "Hindi", "French",
     "Accountancy", "Economics", "Business Studies", "Science"
   ];
 
   const LECTURING_LANG_OPTIONS = [
-    "Malayalam", "English", "Hindi", "Arabic",
-    "Malayalam+English", "Hindi+English", "Malayalam+Hindi"
+    "Fluent in English","English+Malayalam Mix","Malayalam only"
   ];
 
   const GRADE_OPTIONS = [
@@ -35,7 +34,17 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
   const [openGrades, setOpenGrades] = useState(false);
 
   useEffect(() => {
-    if (initial) setData(initial);
+    if (initial) {
+      setData({
+        id: initial.id,
+        fullName: initial.fullName || "",
+        whatsappNumber: initial.whatsappNumber || "",
+        subjects: initial.subjects || [],
+        lecturingLanguage: initial.lecturingLanguage || [],
+        teachingGrades: initial.teachingGrades || [],
+        availableHours: initial.availableHours || [],
+      });
+    }
   }, [initial]);
 
   const toggleSelected = (key, value) => {
@@ -80,7 +89,7 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
         onChange={(e) => setData({ ...data, whatsappNumber: e.target.value })}
       />
 
-      {/* SUBJECTS MULTI SELECT */}
+      {/* SUBJECTS */}
       <div className="mb-3">
         <label className="font-medium">Subjects</label>
 
@@ -111,7 +120,7 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
         )}
       </div>
 
-      {/* LECTURING LANGUAGE MULTI SELECT */}
+      {/* LECTURING LANGUAGE */}
       <div className="mb-3">
         <label className="font-medium">Lecturing Language</label>
 
@@ -144,7 +153,7 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
         )}
       </div>
 
-      {/* TEACHING GRADES MULTI SELECT */}
+      {/* TEACHING GRADES */}
       <div className="mb-3">
         <label className="font-medium">Teaching Grades</label>
 
@@ -177,7 +186,7 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
         )}
       </div>
 
-      {/* AVAILABLE TIME SLOTS */}
+      {/* AVAILABLE HOURS */}
       <div className="mb-3">
         <label className="font-medium">Available Time Slots</label>
 
@@ -215,10 +224,17 @@ export default function FacultyForm({ initial, onSave, onCancel }) {
         </button>
       </div>
 
-      {/* ACTION BUTTONS */}
+      {/* ACTIONS */}
       <div className="flex gap-3 mt-3">
-        <button className="bg-green-600 text-white px-4 py-2 rounded">Save</button>
-        <button type="button" onClick={onCancel} className="bg-gray-300 px-4 py-2 rounded">
+        <button className="bg-green-600 text-white px-4 py-2 rounded">
+          Save
+        </button>
+
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-gray-300 px-4 py-2 rounded"
+        >
           Cancel
         </button>
       </div>
